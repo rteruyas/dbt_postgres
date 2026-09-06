@@ -3,4 +3,5 @@ target/
 dbt_packages/
 logs/
 .env
+.idea/
 __pycache__/
