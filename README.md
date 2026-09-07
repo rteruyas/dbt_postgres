@@ -8,6 +8,7 @@ and is it managed through docker.
 - python 3.11  
 - git  
 - docker
+- ability to run psql (in my case I used ```dbeaver```)
 
 ## Installation
 1. Clone the repo
@@ -43,7 +44,7 @@ services:
 volumes:
   dbt-postgres-data:
 ```
-5. Modify .env.example (committed) and .env (not committed)
+5. Modify .env.example (committed) and .env (not committed)  
 Make a copy of .env.example and name it .env  
 This file will store all your credentials to connect to postgres db
 Edit it if you want other values
@@ -56,17 +57,37 @@ POSTGRES_DB=DB_NAME
 ```
 docker compose up -d
 ```
-7. Start the project  
-This was already started (there is already a folder my_project)
+7. Connect to the database using DBeaver
+8. Create the skeleton for the project
 ```
 dbt init my_project
 ```
-8. Check connection
+dbt init create the folder structure for the new project (my_project). You run it once to bootstrap your project. 
+Here is an example of my_project
+```
+my_project/
+├── dbt_project.yml                     <- this needs to match %USERPROFILE%\.dbt\profiles.yml
+├── models/
+│   └── example/                        <- working examples
+│       ├── my_first_dbt_model.sql
+│       ├── my_second_dbt_model.sql
+│       └── schema.yml                  
+├── seeds/
+├── snapshots/
+├── macros/
+├── tests/
+├── analyses/
+└── README.md
+```
+In addition to creating the starter files, it will also create a user profile under %USERPROFILE%\.dbt\profiles.yml.  
+The profile is global per-machine and not scoped to one project, so it can be reused by other dbt projects too.
+
+9. Check connection
 ```
 cd my_project
 dbt debug
 ```
-9. Make sure it actually runs
+10. Make sure it actually runs
 ```
 dbt run
 ``` 
